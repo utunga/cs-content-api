@@ -1,4 +1,4 @@
-##### query contentList {} {#query-contentlist}
+##### Content List API {#query-contentlist}
 
 logic for populating home pages
 
@@ -8,12 +8,11 @@ For left column on [Euro HY / Marketview mockup](https://projects.invisionapp.co
 
 Note the use of
 
-*   **types** property to specify the allowed contentType (respects content type hierachy)*   **filter** property with boolean logic on tags (including &#039;not&#039; logic via &#039;tags_none&#039;)
+* **types** property to specify the allowed contentType \(respects content type hierachy\)_   \*filter_ property with boolean logic on tags \(including 'not' logic via 'tags\_none'\)
 
-Worth noting that the boolean logic in the filter query is &#039;well defined&#039; but not part of the GraphQL spec per se. We would have to implement this behavior ourselves. (It is also implemented in graph.cool [demo](https://console.graph.cool/Quick%20GraphQL/playground))
+Worth noting that the boolean logic in the filter query is 'well defined' but not part of the GraphQL spec per se. We would have to implement this behavior ourselves. \(It is also implemented in graph.cool [demo](https://console.graph.cool/Quick GraphQL/playground)\)
 
 ```
-
 query { contentList (
   first: 20,
   orderBy: publishDate_DESC,
@@ -51,11 +50,9 @@ query { allContents (
   contentType
   }
 }
-
 ```
 
 ```
-
 {
   "data": {
     "allContents": [
@@ -162,17 +159,15 @@ query { allContents (
     ]
   }
 }
-
 ```
 
 2.1 European High Yield - Market Overview - Highlights
 
 For central column on [Euro HY / Marketview mockup](https://projects.invisionapp.com/share/3AB3R5F4S#/screens/226614980)
 
-Same as last query but filtered by &#039;highlights&#039; feedtag, and slightly different content types
+Same as last query but filtered by 'highlights' feedtag, and slightly different content types
 
 ```
-
 query { contentList (
   first: 5,
   orderBy: publishDate_DESC,
@@ -189,11 +184,9 @@ query { contentList (
   contentType,
   publishDate
 }}
-
 ```
 
 ```
-
 {
   "data": {
     "allContents": [
@@ -225,17 +218,15 @@ query { contentList (
     ]
   }
 }
-
 ```
 
 2.2 European High Yield - Market Overview - Sector Analysis and Reports
 
 For central column on [Euro HY / Marketview mockup](https://projects.invisionapp.com/share/3AB3R5F4S#/screens/226614980)
 
-Note the ability to specify &#039;focus:true&#039; at a lower level in the query.
+Note the ability to specify 'focus:true' at a lower level in the query.
 
 ```
-
 query { contentList (
   first: 5,
   orderBy: publishDate_DESC,
@@ -252,11 +243,9 @@ query { contentList (
   contentType,
   publishDate
 }}
-
 ```
 
 ```
-
 {
   "data": {
     "allContents": [
@@ -288,7 +277,6 @@ query { contentList (
     ]
   }
 }
-
 ```
 
 2.3 European High Yield - Highlights - Most Read
@@ -298,7 +286,6 @@ For left column on [Euro HY / Highlights mockup](https://projects.invisionapp.co
 Similar to last query but sorted by ViewsLast24Hrs
 
 ```
-
 query { contentList (
   first: 5,
   orderBy: viewsLast24Hrs_DESC,
@@ -315,11 +302,9 @@ query { contentList (
   contentType,
   publishDate
 }}
-
 ```
 
 ```
-
 {
   "data": {
     "allContents": [
@@ -351,5 +336,7 @@ query { contentList (
     ]
   }
 }
-
 ```
+
+
+

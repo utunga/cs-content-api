@@ -1,0 +1,11 @@
+{
+    "plugins": ["scripts"],
+    "pluginsConfig": {
+        "scripts": {
+            "files": [
+                "./scripts/prettify_json.js",
+                 "./scripts/jquery_3.2.0.min.js"
+            ]
+        }
+    }
+}

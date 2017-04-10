@@ -1,0 +1,95 @@
+@import url(https://fonts.googleapis.com/css?family=Lato:400,700,300);
+
+
+body, * {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Lato';
+  font-size: 16px;
+  margin: 0;
+  padding: 0;
+}
+
+h1, h2, h3, h4, h5 {
+  margin: auto;
+  font-family: 'Lato';
+  text-align: center;
+  padding: 16px 0;
+}
+
+p {
+  margin: 16px auto;
+  line-height: 1.5em;
+}
+
+a {
+  font-weight: bold;
+  color: #20AFEA;
+}
+
+/* from jSON Prettify */
+
+pre {
+  background-color: ghostwhite;
+  border: 1px solid silver;
+  padding: 10px 20px;
+  margin: 20px; 
+}
+.json-key {
+  color: brown;
+}
+.json-value {
+  color: navy;
+}
+.json-string {
+  color: olive;
+}
+
+h2, h3, h4 {
+  text-align: left
+}
+
+h3 {
+  padding: 10px 10px 10px 0px;
+  font-size: 20px;
+  border-bottom: 2px solid #20AFEA;
+  margin-bottom: 10px;
+  color: #666;
+}
+
+/* mine */
+body .markdown-section pre
+{
+  max-height: 400px;
+  overflow-x: auto;
+  overflow-y: auto;
+  white-space: pre-wrap;       /* Since CSS 2.1 */
+  white-space: -moz-pre-wrap;  /* Mozilla, since 1999 */
+  white-space: -pre-wrap;      /* Opera 4-6 */
+  white-space: -o-pre-wrap;    /* Opera 7 */
+  word-wrap: break-word;       /* Internet Explorer 5.5+ */
+}
+
+body .markdown-section pre>code
+{
+  white-space: pre-wrap;       /* Since CSS 2.1 */
+  white-space: -moz-pre-wrap;  /* Mozilla, since 1999 */
+  white-space: -pre-wrap;      /* Opera 4-6 */
+  white-space: -o-pre-wrap;    /* Opera 7 */
+  word-wrap: break-word;       /* Internet Explorer 5.5+ */
+}
+
+pre.noheight {
+  height: inherit;
+}
+
+img.preview {
+  width:300px;
+  float: right;
+}
+
+.clear {
+  clear:both;
+}

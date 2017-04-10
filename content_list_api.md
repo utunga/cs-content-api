@@ -1,14 +1,58 @@
-##### Content List API {#query-contentlist}
+## Content List API {#content-list-api}
 
-logic for populating home pages
+Logic for creating lists of content on home pages.
 
-2.0 European High Yield - Market Overview - Recently published
+###  2.0 An example of a more complex query {#content_2_0}
+
+It seems like a good idea to start with a more complex query, this one pulled from an example in Joe's analysis to date (in fact the following query does a little more than that). This query finds the most recent "Market Update" from _either_ TMT-Europe _OR_ TMT-Automotive. NB this query runs directly on the demo site. 
+
+``` 
+query { allContents (
+  filter: {
+    AND: [
+      { tags_some: { tagId: "region/europe" } },
+      {
+        OR : [ { tags_some: { tagId: "sector/tmt" } },
+               { tags_some: { tagId: "sector/automotive" } }
+      ]}
+      { contentType_ends_with: "MarketUpdates" }  
+      ]
+  },
+  first: 1,
+  orderBy: publishDate_DESC)
+  {
+  title,
+  contentId,
+  contentType 
+  }
+}
+```
+
+This can be run on the demo server, and gives this result:
+
+<pre><code class="prettify_json">
+{
+  "data": {
+    "allContents": [
+      {
+        "title": "Euro TMT Market Updates: The Netherlands",
+        "contentId": 199378,
+        "contentType": "EuroTMTMarketUpdates"
+      }
+    ]
+  }
+}
+</code></pre>
+
+
+
+###  2.1 European High Yield - Market Overview - Recently published {#content_2_1}
 
 For left column on [Euro HY / Marketview mockup](https://projects.invisionapp.com/share/3AB3R5F4S#/screens/226614980)
 
-Note the use of
-
-* **types** property to specify the allowed contentType \(respects content type hierachy\)_   \*filter_ property with boolean logic on tags \(including 'not' logic via 'tags\_none'\)
+Note the use of:
+* _types) property to specify the allowed contentType \(respects content type hierachy\)
+* _filter_ property with boolean logic on tags \(including 'not' logic via 'tags\_none'\)
 
 Worth noting that the boolean logic in the filter query is 'well defined' but not part of the GraphQL spec per se. We would have to implement this behavior ourselves. \(It is also implemented in graph.cool [demo](https://console.graph.cool/Quick GraphQL/playground)\)
 
@@ -52,12 +96,12 @@ query { allContents (
 }
 ```
 
-```
+<pre><code class="prettify_json">
 {
   "data": {
-    "allContents": [
+    "contentList": [
       {
-        "title": "HY Note: EA Partners I & II",
+        "title": "HY Note: EA Partners I &amp; II",
         "contentId": 199150,
         "contentType": "HighYieldNotes"
       },     
@@ -159,9 +203,9 @@ query { allContents (
     ]
   }
 }
-```
+</code></pre>
 
-2.1 European High Yield - Market Overview - Highlights
+### 2.2 European High Yield - Market Overview - Highlights {#content_2_2}
 
 For central column on [Euro HY / Marketview mockup](https://projects.invisionapp.com/share/3AB3R5F4S#/screens/226614980)
 
@@ -186,10 +230,10 @@ query { contentList (
 }}
 ```
 
-```
+<pre><code class="prettify_json">
 {
   "data": {
-    "allContents": [
+    "contentList": [
       {
         "title": "CNHI 3Q16: Margins Improve, Down-cycle Continues",
         "contentId": 199948,
@@ -218,9 +262,9 @@ query { contentList (
     ]
   }
 }
-```
+</code></pre>
 
-2.2 European High Yield - Market Overview - Sector Analysis and Reports
+### 2.3 European High Yield - Market Overview - Sector Analysis and Reports {#content_2_3}
 
 For central column on [Euro HY / Marketview mockup](https://projects.invisionapp.com/share/3AB3R5F4S#/screens/226614980)
 
@@ -245,10 +289,10 @@ query { contentList (
 }}
 ```
 
-```
+<pre><code class="prettify_json">
 {
   "data": {
-    "allContents": [
+    "contentList": [
       {
         "title": "4Q16 European Quarterly Credit Market Monitor",
         "contentId": 199982,
@@ -277,13 +321,13 @@ query { contentList (
     ]
   }
 }
-```
+</code></pre>
 
-2.3 European High Yield - Highlights - Most Read
+### 2.4 European High Yield - Highlights - Most Read {#content_2_4}
 
 For left column on [Euro HY / Highlights mockup](https://projects.invisionapp.com/share/3AB3R5F4S#/screens/226614985)
 
-Similar to last query but sorted by ViewsLast24Hrs
+This is similar to the last query but sorted by ViewsLast24Hrs
 
 ```
 query { contentList (
@@ -304,10 +348,10 @@ query { contentList (
 }}
 ```
 
-```
+<pre><code class="prettify_json">
 {
   "data": {
-    "allContents": [
+    "contentList": [
       {
         "title": "CNHI 3Q16: Margins Improve, Down-cycle Continues",
         "contentId": 199948,
@@ -336,7 +380,110 @@ query { contentList (
     ]
   }
 }
-```
+</code></pre>
 
+### Content List Schema {#content_list_schema}
 
+JSON Responses should correspond to elements from this schema
 
+<pre><code class="lang-json noheight">
+type Content {
+  contentId: Int
+  contentType: String
+  templateType: String
+  title: String
+  summary: String
+  createdAt: DateTime!
+  id: ID!
+  publishDate: DateTime
+  summary: String
+  tags: [Tag!]!
+  updatedAt: DateTime!
+  viewsLast24Hrs: Int
+  viewsLast7Days: Int
+}
+</code></pre>
+
+<pre><code class="lang-json noheight">
+type Tag {
+  content: Content @relation(name: "ContentTags")
+  createdAt: DateTime!
+  focus: Boolean
+  id: ID!
+  name: String
+  tagId: String
+  type: String
+  updatedAt: DateTime!
+}
+</code></pre>
+
+It can be thought of as a list of Content objecs, each with a flattened list of tags on them. Like this:
+
+<pre><code class="lang-json noheight">
+[
+  {
+    "contentId": 200000,
+    "contentType": "WorthWatching",
+    "publishDate": "2016-11-01T21:31:27Z",
+    "title": "Shell: Strong 3Q16 Beat, Healthy Momentum",
+    "summary": "Shell (Aa2/A/AA-): On the 1 November 2016 Shell released its 3Q16/9M16 results with earnings coming out significantly above analysts' estimates driving a healthy increase in share price (c. +4%). These results show that as the BG acquisition i ..",
+    "tags": [
+      {
+        "id": 18569506,
+        "type": "Company",
+        "focus": true,
+        "tagId": "company/royal_dutchshell",
+        "name": "Royal Dutchshell Group"
+      },
+      {
+        "id": 18571333,
+        "type": "Tag",
+        "focus": true,
+        "tagId": "tag/earnings",
+        "name": "Earnings"
+      },
+      {
+        "id": 18569515,
+        "type": "Sector",
+        "focus": false,
+        "tagId": "sector/energy",
+        "name": "Energy"
+      },
+      {
+        "id": 18569518,
+        "type": "Country",
+        "focus": false,
+        "tagId": "country/netherlands",
+        "name": "Netherlands"
+      },
+      {
+        "id": 18569530,
+        "type": "Tag",
+        "focus": false,
+        "tagId": "tag/investment_grade",
+        "name": "Investment Grade"
+      },
+      {
+        "id": 18569533,
+        "type": "GhostTag",
+        "focus": false,
+        "tagId": "ghosttag/corporates",
+        "name": "Corporates"
+      },
+      {
+        "id": 18569512,
+        "type": "Sector",
+        "focus": false,
+        "tagId": "sector/oil_gas",
+        "name": "Oil and Gas"
+      },
+      {
+        "id": 18569521,
+        "type": "Region",
+        "focus": false,
+        "tagId": "region/europe",
+        "name": "Europe"
+      }
+    ]
+  },
+</code></pre>

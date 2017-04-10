@@ -1,6 +1,8 @@
-##### query nav {} {#query-nav}
+## UI - Navigation API {#ui_nav}
 
-0.0 Primary Navigation
+The 'Navigation' API was originally thought of as being part of the Content API but it appears on further configuration that it belongs as part of the wider "UI API" aka the page configuration API. So far only the Navigation part is fleshed out at all.
+
+### 3.0 Primary Navigation {#ui_nav_3_0}
 
 Because of close relationship to the view model binding this area needs a lot of input from vShift. For instance nav items, often include routing configuration such as view names or other component configuration. In the below there is just a simple &#039;view&#039; paramater with name of the template.
 
@@ -19,8 +21,7 @@ query nav(currentPath: "/", isPrimary: true) {
 
 ```
 
-```
-
+``` json
 {
 
 "data":
@@ -92,7 +93,7 @@ query nav(currentPath: "/", isPrimary: true) {
 
 ```
 
-0.1 Secondary Navigation
+### 3.1 Secondary Navigation {#ui_nav_3_1}
 
 Similar api to primary navigation but an alternative list for rendering elsewhere. Can be context dependent - current path is passed in.
 
@@ -109,8 +110,7 @@ query nav(currentPath: "/", isPrimary: false) {
 
 ```
 
-```
-
+``` json
 { 
   "data": [
     {
@@ -149,7 +149,24 @@ query nav(currentPath: "/", isPrimary: false) {
       "name": "Contact Us",
       "view": "marketing_contact_template"
     }
-  ]
 }
 
 ```
+
+### UI Nav Schema {#schema}
+
+JSON Responses should correspond to elements from this schema
+
+<pre><code class="lang-json noheight">
+type Nav {
+  path: String
+  tab: Boolean
+  name: String
+  view: String
+  subnav: [Nav]
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+</code></pre>
+

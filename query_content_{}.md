@@ -2,18 +2,17 @@
 
 1.0 Full content - Research Marketing Home as example
 
-Content for marketing pages is an example of content that would be handled as a &quot;content&quot; request. In such cases we are simply requesting a list of pre-specified content &#039;blocks&#039; to flow into the design.
+Content for marketing pages is an example of content that would be handled as a "content" request. In such cases we are simply requesting a list of pre-specified content 'blocks' to flow into the design.
 
-In some cases (primarily pre-existing written analyst content) we will want to preserve the list of fields in the existing templates and simply present it in a new way. In other cases, for instance with this new marketing home, we can start fresh and write new content to fit into the new boxes.
+In some cases \(primarily pre-existing written analyst content\) we will want to preserve the list of fields in the existing templates and simply present it in a new way. In other cases, for instance with this new marketing home, we can start fresh and write new content to fit into the new boxes.
 
-In the latter case vShift should specify what fields they desire and we can easily build authoring templates to match. In the former case we will specify what content is available. Either way the exact lists of fields for each &#039;content type&#039; be documented here.
+In the latter case vShift should specify what fields they desire and we can easily build authoring templates to match. In the former case we will specify what content is available. Either way the exact lists of fields for each 'content type' be documented here.
 
-It is worth noting, per the above, that (at least in this straw man proposal) the content-type is not specified in the request. It is up to the view/template to request the fields that it wants. For this reason the client side &#039;full content&#039; requests may have an almost one-to-one correspondence to the content authoring templates aka &#039;content types&#039;. However because it is not necessary to pass content-type as a parameter &#039;duck typing&#039; is allowed. For example, because almost all templates support a &#039;title&#039; property, so if that&#039;s all you want (across a range of different underlying templates) then that works just fine. However, if a field is requested that doesnt exist in the authoring template an error would be raised.
+It is worth noting, per the above, that \(at least in this straw man proposal\) the content-type is not specified in the request. It is up to the view/template to request the fields that it wants. For this reason the client side 'full content' requests may have an almost one-to-one correspondence to the content authoring templates aka 'content types'. However because it is not necessary to pass content-type as a parameter 'duck typing' is allowed. For example, because almost all templates support a 'title' property, so if that's all you want \(across a range of different underlying templates\) then that works just fine. However, if a field is requested that doesnt exist in the authoring template an error would be raised.
 
 Currently we have a large number of different templates/content-types but hopefully with a bit of thought and some judicial use of sub-components, it would be possible to narrow this down to a shorter list. Html content will be delivered as json escaped string.
 
 ```
-
 POST
 query { content(path:"marketing") {
   title,
@@ -23,12 +22,10 @@ query { content(path:"marketing") {
     section_body,
     section_image
   }
-}}    
-
+}}
 ```
 
 ```
-
 { 
   "data": {
     "title": "The leader in independent research",
@@ -52,7 +49,6 @@ query { content(path:"marketing") {
     ]
   }
 }
-
 ```
 
 1.1 Full content - Team Bio
@@ -60,17 +56,14 @@ query { content(path:"marketing") {
 Another example of content schema, this time based on pre-existing content type.
 
 ```
-
 content(path:"/team/simon_adamson") {
   title,
   subtitle,
   body
-}    
-
+}
 ```
 
-```
-
+```js
 { 
   "data": {
     "title": "Simon Adamson",
@@ -78,27 +71,23 @@ content(path:"/team/simon_adamson") {
     "body": "<p>As head of the company's European business unit, Simon is also a member of the firm's Executive Committee and is on the CreditSights, Inc. Board of Directors. He joined CreditSights as Senior European Financial Analyst in 2003.</p><p> Prior to that he was a Managing Director, Head of European High Grade Research and Senior European Bank analyst at Deutsche Bank (1996-2003). Simon worked at rating agency IBCA, now part of FitchRatings, from 1987 to 1996 where in addition to covering banks in various European countries he was an Executive Committee member. Simon started his career in 1983 at Midland Bank's International Division, spending four years there in a variety of roles. He read Modern Languages at Sidney Sussex College, Cambridge University, graduating in 1983.</p>"
   }
 }
-
 ```
 
 1.2 Content Sub Component - Request Free Trial
 
-As far as the API is concerned, textual content for sub components rendered within other pages is no different than &quot;full content&quot; API requests. The only indication that content is shared across multiple pages might be the path used to store them (&quot;/shared/&quot; in this case).
+As far as the API is concerned, textual content for sub components rendered within other pages is no different than "full content" API requests. The only indication that content is shared across multiple pages might be the path used to store them \("/shared/" in this case\).
 
 The only rule is that any content that can be updated by CS Staff needs to be stored in a template of some kind. This should include all text without exception.
 
 ```
-
 query content(path:"/shared/free_trial") {
   title,
   intro,
   buttonText,
-}    
-
+}
 ```
 
 ```
-
 { 
   "data": {
     "title": "Request a Free Trial",
@@ -106,21 +95,17 @@ query content(path:"/shared/free_trial") {
     "buttonText": "Request a Trial"
   }
 }
-
 ```
 
 1.3 Full Content - Worth Watching
 
-There are two main ways to access content via known path (like &#039;/about/team&#039;) or via contentId (206168). All content can be access via id if known, but only some content also allows access via other known paths. However, as far as the API is concerned, access via an id instead of known path is done just by specifying a path starting with &#039;/id/&#039;, as here. (Or we could be more explicit about this if preferable?)
+There are two main ways to access content via known path \(like '/about/team'\) or via contentId \(206168\). All content can be access via id if known, but only some content also allows access via other known paths. However, as far as the API is concerned, access via an id instead of known path is done just by specifying a path starting with '/id/', as here. \(Or we could be more explicit about this if preferable?\)
 
 ```
-
     GET /content/206168
-
 ```
 
 ```
-
     POST
     query { content(id:206168) {
       contentId,
@@ -128,11 +113,9 @@ There are two main ways to access content via known path (like &#039;/about/team
       keyword,
       body
     }}
-
 ```
 
 ```
-
 { 
  "contentId": "206168",
  "templateType": "WorthWatching",
@@ -140,17 +123,15 @@ There are two main ways to access content via known path (like &#039;/about/team
  "keyword": "U.S. Steel",
  "body": "<p><b>U.S. Steel</b> (Caa1/B): According to Slovak newspaper Hospodarske Noviny, which previously reported on China's Hesteel Group bid for X's Europe unit in January (see <a href=\"/id/203088\">U.S. Steel: Rumored Negotiations for Europe Unit</a> 01-30-17), talks on the sale may be completed as early as this month. Hesteel is said to be offering around $1.4 bn for the integrated steel plant and coke production facilities that form the U.S. Steel Europe (USSE) segment. The Slovak government was also previously said to be interested in a small stake. The USSE segment has annual raw steel production capacity of 5 mn tonnes, and generated $265 mn in EBITDA last year on $2.2 bn in sales according to the company. A $1.4 bn price tag would value the unit at approximately 5.3x 2016 EBITDA. </p>"
 }
-
 ```
 
 1.3 Full Content - Analysis
 
 An example of the analysis template. Similar to mockup [here](https://projects.invisionapp.com/share/3AB3R5F4S#/screens/226615100)
 
-Some discussion will be needed around embedded images and links. The suggestion here is to just embed these as simple references in the html returned. Also, the current rendering of inine images supports an &#039;align left/align right&#039; behavior. It may be important to preserve this behviour in some form in the new layout - specified in the below with a class=&quot;align_left&quot; attribute. There is also some special behavior around hiding or showing of the &#039;executive summary&#039; section for analysis that we should discuss.
+Some discussion will be needed around embedded images and links. The suggestion here is to just embed these as simple references in the html returned. Also, the current rendering of inine images supports an 'align left/align right' behavior. It may be important to preserve this behviour in some form in the new layout - specified in the below with a class="align\_left" attribute. There is also some special behavior around hiding or showing of the 'executive summary' section for analysis that we should discuss.
 
 ```
-
     query content(path:"/id/206035") {
       contentId,
       title,
@@ -164,12 +145,10 @@ Some discussion will be needed around embedded images and links. The suggestion 
       ratingsComment,
       ratingsCommentTitle,
       body
-    } 
-
+    }
 ```
 
 ```
-
 {
     "contentId": 206035,
     "title": "Unipol: FY16 Capital Not Yet Optimised",
@@ -189,17 +168,15 @@ Some discussion will be needed around embedded images and links. The suggestion 
     "ratingsCommentTitle": "",
     "body": "<p><img class=\"align_left\" src=\"/resources/490412/Unipol%202.png\" />There is no doubt that Unipol (the group) enjoys a strong franchise in Italy but suffers somehow from (i) a limited risk diversification considering the importance of the Non-Life  line of business (Motor accounted for 57% of premiums in P&C in 2016) and (ii) the significant exposure towards Italian risk from both a business and investment perspective. Our opinion is nevertheless nuanced by the importance of the Motor line of business that reduces the volatility of its performance as a consequence of the size of the portfolio and independence of risks. In Life, Unipol remains a key player in Italy with a 6.5% market share in 2015 and premiums of €6,294 mn in 2016.</p> <p>Unipol benefits form a strong retail network with 3,000 agencies in Italy (20,000 agents). In P&C, we challenge Unipol's multi-channel strategy as we believe it might become obsolete in the short-to-medium term. Indeed, Generali and Axa tend to maximise their supply to their personal lines of business through internet as they increase the agents' time to their Commercial and Corporate lines of business. In Life, we believe that Unipol will remain a relatively small player considering its limited bank network (4,800 banking branches) compared with Intesa for example. <img class=\"align_right\" style=\"font-size: 14px; background-color: rgb(255, 255, 255);\" src=\"/resources/490410/Unipol1.png\" /></p><p>Unipol group structure is made of a group holding, Unipol Gruppo Finanziario, and a a sub-group holding/operating entity, Unipol Sai, which is essentially made of the P&C and Life activities. Both Unipol Gruppo Finanziario and Unipol Sai are exposed to the problematic bank subsidiary, Unipol Banca. Bonds are issued through these three entities. The senior unsecured bonds tend to be issued through the holding company, Unipol Gruppo Finanziario, while the subordinated debt are issued at the sub holding/operating entity, Unipol Sai. We do not cover the bonds issued at the bank level considering their relatively small sizes; they tend to be placed to retail investors. Considering the relatively weak quality of the loan portfolio, the relatively high cost-income ratio and the absence of a formal guarantee from both the Unipol Gruppo Finanziario and Unipol Sai, we would not recommend investing in the debt issued by Unipol Banca.</p> <p>We have to admit that we have been quite...&snip></p>"
 }
-
 ```
 
 1.3 Restricted Content - Analysis as anonymous
 
-Access to content will be restricted according to the claims present in the auth token at the API level (as well as, presumably, in the rendering layer). For anonymous level access, regardless of what is requested, only title and teaser is returned. (Maybe bullets??)
+Access to content will be restricted according to the claims present in the auth token at the API level \(as well as, presumably, in the rendering layer\). For anonymous level access, regardless of what is requested, only title and teaser is returned. \(Maybe bullets??\)
 
 Per mockup - [Schaeffler Mixed Results, limited access](https://projects.invisionapp.com/share/3AB3R5F4S#/screens/226614609)
 
 ```
-
     query content(path:"/id/206035") {
       contentId,
       title,
@@ -213,12 +190,10 @@ Per mockup - [Schaeffler Mixed Results, limited access](https://projects.invisio
       ratingsComment,
       ratingsCommentTitle,
       body
-    } 
-
+    }
 ```
 
 ```
-
 {
     "contentId": 206035,
     "title": "Unipol: FY16 Capital Not Yet Optimised",
@@ -233,27 +208,23 @@ Per mockup - [Schaeffler Mixed Results, limited access](https://projects.invisio
     "ratingsCommentTitle": "",
     "body": ""
 }
-
 ```
 
 1.x Review of various content schemas
 
-There are 48 templates in the old site, most of which we will just abandon, but a few we will want to port across. Per the discussion above, we will want to preserve the schema of written analyst content but can specify new schema for the new sections. A quick review of the two categories, relative to existing &#039;template types&#039; follows.
+There are 48 templates in the old site, most of which we will just abandon, but a few we will want to port across. Per the discussion above, we will want to preserve the schema of written analyst content but can specify new schema for the new sections. A quick review of the two categories, relative to existing 'template types' follows.
 
 **Consider keeping content in some form - porting across**
 
 ```
-
 { "Analyst written articles": [
 "AnalysisTemplate", "WWTemplate", "MCTemplate", "ArticleTemplate", "TearsheetTemplate", "FundamentalsTearsheetTemplate", "PrivateWealthSheetTemplate", "FundPrivateWealthSheetTemplate", "CREWealthSheetTemplate", "SingleColSheetTemplate", "SingleColTearsheetTemplate", "UnchainedTearsheetTemplate" ],
 "Other written content": ["StaffProfileTemplate (see above)","ContactTemplate","LegalPageTemplate"]}
-
 ```
 
 **Assume content can be ignored - not relevant to new design**
 
 ```
-
   {"Home Page Templates":["EuroMarketsTemplate", "StaticPageTemplate", "MarketingHomeTemplate", "HighYieldTemplate", "MarketViewsTemplate", "ForgotPasswordTemplate", "MunicipalsTemplate", "EmergingMarketsTemplate", "RatingsHomeTemplate", "SectorHomeTemplate", "SectorPerformanceTemplate", "TearsheetsTemplate", "HYHomeTemplate", "EuroHYHomeTemplate", "ResearchHomeTemplate", "SovereignsTemplate", "StrategyTemplate"], 
 
 "Misc Content":["NewSubWelcomeTemplate", "AnnouncementsTemplate", "OneColStaticPageTemplate", "OurTeamTemplate", "ProductMarketingTemplate", "TopReadArticlesTemplate", "TourPageTemplate", "TwoColStaticPageTemplate"], 
@@ -262,5 +233,7 @@ There are 48 templates in the old site, most of which we will just abandon, but 
 
 "Email Templates":["EmailHeadingArticleTemplate", "DailyCommentTemplate", "EmailTemplate"]
 }
-
 ```
+
+
+

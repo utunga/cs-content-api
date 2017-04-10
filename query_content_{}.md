@@ -12,7 +12,7 @@ It is worth noting, per the above, that \(at least in this straw man proposal\) 
 
 Currently we have a large number of different templates/content-types but hopefully with a bit of thought and some judicial use of sub-components, it would be possible to narrow this down to a shorter list. Html content will be delivered as json escaped string.
 
-```
+```GraphQL
 POST
 query { content(path:"marketing") {
   title,
@@ -25,7 +25,7 @@ query { content(path:"marketing") {
 }}
 ```
 
-```
+```js
 { 
   "data": {
     "title": "The leader in independent research",
@@ -55,7 +55,7 @@ query { content(path:"marketing") {
 
 Another example of content schema, this time based on pre-existing content type.
 
-```
+```graphql
 content(path:"/team/simon_adamson") {
   title,
   subtitle,

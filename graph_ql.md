@@ -1,12 +1,14 @@
 ##### **Graph QL** {#cs-content-api-spec}
 
-This proposal is just a straw man for further discussion. However amongst other things, it suggests using GraphQL instead of more standard REST for the Content API. This suggestion is made, partly because, in alignment with Joe's analysis in Word, somewhat complex query logic may be required in some cases. 
+This proposal is just a straw man for further discussion. 
+
+However amongst other things, it suggests we consider GraphQL instead of a more standard REST interface for the Content API. This suggestion is made partly because, in alignment with Joe's analysis in Word, somewhat complex query logic may be required in some cases and it feels like POSTing those queries would be easier/more powerful. 
 
 To get a quick introduction to GraphQL it may be helpful to read this [introduction to GraphQL](https://facebook.github.io/react/blog/2015/05/01/graphql-introduction.html).
 
 **Graph QL Demo**
 
-To get a more 'hands on' understanding of GraphQL as applied to this use case I have set up a [demo site with live GraphQL queries using some of our data](https://console.graph.cool/Quick GraphQL/playground). 
+A more 'hands on' demo of GraphQL as applied to this use case has been set up a [here](https://console.graph.cool/Quick GraphQL/playground). This allows the use of live GraphQL queries against some of our data.
 
 * Login as '**mthompson@creditsights.com**' with password '**graphcoolql**'. 
 * Click on 'playground' link
@@ -39,6 +41,6 @@ query { allContents (
 }
 ```
 
-_Of course is just a quick demo with limited data and doesn't actually implement the full content spec suggested below. That said it'd be great if this document could eventually incorporate 'live endpoints' so that the reader could experiment with different queries, directly inline.
+Of course this is just a quick demo with limited data and doesn't actually implement the full content spec suggested below. That said it'd be great if this document could eventually incorporate 'live endpoints' so that the reader could experiment with different queries, directly inline.
 
 
